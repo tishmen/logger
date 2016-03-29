@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import TestModel
+from .models import TestModel, LoggerEntery, AdminLoggerEntery
 
 
 class ReadOnlyAdmin(admin.ModelAdmin):
@@ -19,5 +19,10 @@ class ReadOnlyAdmin(admin.ModelAdmin):
 
 @admin.register(TestModel)
 class TestModelAdmin(ReadOnlyAdmin):
+
+    pass
+
+@admin.register(LoggerEntery)
+class LogModelAdmin(AdminLoggerEntery):
 
     pass
