@@ -1,9 +1,15 @@
 from django.contrib import admin
 
-from .models import Log
+from .models import Log, TestModel
 
 
 class BaseAdmin(admin.ModelAdmin):
+
+    exclude = ['user']
+
+    def save_model(self, request, obj, form, change):
+        obj.user = request.user
+        obj.save()
 
     def get_queryset(self, request):
         queryset = super(BaseAdmin, self).get_queryset(request)
@@ -30,3 +36,9 @@ class LogAdmin(BaseAdmin, ReadOnlyAdmin):
     search_fields = ['entry']
     list_display = ['level', 'entry', 'timestamp']
     list_filter = ['level']
+
+
+@admin.register(TestModel)
+class TestModelAdmin(BaseAdmin):
+
+    pass

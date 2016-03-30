@@ -36,6 +36,15 @@ class Log(models.Model):
         return '[{}: {}] {}'.format(self.timestamp, self.level, self.entry)
 
 
+class TestModel(models.Model):
+
+    user = models.ForeignKey(User)
+    test_field = models.TextField()
+
+    def __str__(self):
+        return self.test_field
+
+
 def test_logging():
     user = User.objects.first()
     Log.debug(user, 'test for debug')
