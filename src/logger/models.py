@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.utils import timezone
 
 
 class Log(models.Model):
@@ -19,27 +18,19 @@ class Log(models.Model):
 
     @staticmethod
     def debug(user, entry):
-        Log.objects.create(
-            user=user, entry=entry, level='debug', timestamp=timezone.now()
-        )
+        Log.objects.create(user=user, entry=entry, level='debug')
 
     @staticmethod
     def info(user, entry):
-        Log.objects.create(
-            user=user, entry=entry, level='info', timestamp=timezone.now()
-        )
+        Log.objects.create(user=user, entry=entry, level='info')
 
     @staticmethod
     def warning(user, entry):
-        Log.objects.create(
-            user=user, entry=entry, level='warning', timestamp=timezone.now()
-        )
+        Log.objects.create(user=user, entry=entry, level='warning')
 
     @staticmethod
     def error(user, entry):
-        Log.objects.create(
-            user=user, entry=entry, level='error', timestamp=timezone.now()
-        )
+        Log.objects.create(user=user, entry=entry, level='error')
 
     def __str__(self):
         return '[{}: {}] {}'.format(self.timestamp, self.level, self.entry)
