@@ -1,6 +1,13 @@
 from django.contrib import admin
 
-from .models import TestModel, LoggerEntery, AdminLoggerEntery
+from .models import Log
+
+
+class BaseAdmin(admin.ModelAdmin):
+
+    def get_queryset(self, request):
+        queryset = super(BaseAdmin, self).get_queryset(request)
+        return queryset.filter(user=request.user)
 
 
 class ReadOnlyAdmin(admin.ModelAdmin):
@@ -17,12 +24,9 @@ class ReadOnlyAdmin(admin.ModelAdmin):
         pass
 
 
-@admin.register(TestModel)
-class TestModelAdmin(ReadOnlyAdmin):
+@admin.register(Log)
+class LogAdmin(BaseAdmin, ReadOnlyAdmin):
 
-    pass
-
-@admin.register(LoggerEntery)
-class LogModelAdmin(AdminLoggerEntery):
-
-    pass
+    search_fields = ['entry']
+    list_display = ['level', 'entry', 'timestamp']
+    list_filter = ['level']
